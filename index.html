@@ -4,323 +4,93 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hệ Thống Ôn Tập - HCMUS Style</title>
-    <link rel="stylesheet" href="style.css">
     <style>
-        /* --- CẤU HÌNH GIAO DIỆN MỚI (THEO PHONG CÁCH HCMUS) --- */
         :root {
-            --primary: #005a8d; /* Xanh đậm HCMUS */
-            --accent: #f39c12;  /* Màu cam nhấn */
+            --primary: #005a8d;
+            --accent: #f39c12;
             --light-bg: #f8f9fa;
-            --text-color: #333;
             --border-color: #ddd;
         }
+        body { display: flex; flex-direction: column; min-height: 100vh; background-color: var(--light-bg); font-family: 'Segoe UI', sans-serif; margin: 0; }
+        
+        /* HEADER */
+        header { background-color: #fff; border-bottom: 4px solid var(--primary); padding: 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .header-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; gap: 20px; }
+        .logo { height: 80px; width: auto; }
+        .header-text h1 { color: var(--primary); font-size: 1.8rem; margin: 0; text-transform: uppercase; font-weight: 700; }
+        .header-text p { color: #666; margin: 5px 0 0 0; font-size: 1rem; }
 
-        body {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            background-color: var(--light-bg);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-        }
-
-        /* 1. HEADER SECTION */
-        header {
-            background-color: #fff;
-            border-bottom: 4px solid var(--primary);
-            padding: 15px 0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .header-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .logo {
-            height: 80px; /* Chiều cao logo */
-            width: auto;
-            object-fit: contain;
-        }
-
-        .header-text h1 {
-            color: var(--primary);
-            font-size: 1.8rem;
-            margin: 0;
-            text-transform: uppercase;
-            font-weight: 700;
-        }
-
-        .header-text p {
-            color: #666;
-            margin: 5px 0 0 0;
-            font-size: 1rem;
-        }
-
-        /* 2. BODY SECTION */
-        .main-body {
-            flex: 1;
-            max-width: 1200px;
-            width: 100%;
-            margin: 40px auto;
-            padding: 0 20px;
-            box-sizing: border-box;
-        }
-
-        /* Grid Layout cho các Khu vực (Domain) */
-        .domain-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
-            gap: 30px;
-        }
-
-        /* Style cho từng Khối Lĩnh vực */
-        .domain-card {
-            background: #fff;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            transition: transform 0.3s ease;
-        }
-
-        .domain-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px rgba(0,0,0,0.1);
-        }
-
-        .domain-header {
-            background-color: var(--primary);
-            color: #fff;
-            padding: 15px 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .domain-icon { font-size: 1.5rem; }
+        /* BODY */
+        .main-body { flex: 1; max-width: 1200px; width: 100%; margin: 40px auto; padding: 0 20px; box-sizing: border-box; }
+        .domain-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        
+        .domain-card { background: #fff; border-radius: 8px; border: 1px solid var(--border-color); overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: transform 0.3s ease; }
+        .domain-card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px rgba(0,0,0,0.1); }
+        .domain-header { background-color: var(--primary); color: #fff; padding: 15px 20px; display: flex; align-items: center; gap: 10px; }
         .domain-title { margin: 0; font-size: 1.2rem; font-weight: 600; }
+        .domain-content { padding: 20px; }
 
-        .domain-content {
-            padding: 20px;
-        }
-
-        /* Style cho Môn học bên trong Khối */
-        .subject-item {
-            border-bottom: 1px solid #eee;
-            padding-bottom: 15px;
-            margin-bottom: 15px;
-        }
+        .subject-item { border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 15px; }
         .subject-item:last-child { border-bottom: none; margin-bottom: 0; }
-
-        .subject-title {
-            color: var(--primary);
-            font-size: 1.1rem;
-            margin: 0 0 10px 0;
-            font-weight: bold;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        /* Danh sách đề thi nhỏ gọn */
-        .exam-list-mini {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .exam-link {
-            display: block;
-            padding: 8px 12px;
-            background-color: #f1f5f9;
-            margin-bottom: 5px;
-            border-radius: 4px;
-            text-decoration: none;
-            color: #333;
-            font-size: 0.9rem;
-            transition: background 0.2s;
-            border-left: 3px solid transparent;
-        }
-
-        .exam-link:hover {
-            background-color: #e2e8f0;
-            border-left-color: var(--accent);
-            color: var(--primary);
-        }
-
+        .subject-title { color: var(--primary); font-size: 1.1rem; margin: 0 0 10px 0; font-weight: bold; }
+        
+        .exam-link { display: block; padding: 8px 12px; background-color: #f1f5f9; margin-bottom: 5px; border-radius: 4px; text-decoration: none; color: #333; font-size: 0.9rem; transition: background 0.2s; border-left: 3px solid transparent; }
+        .exam-link:hover { background-color: #e2e8f0; border-left-color: var(--accent); color: var(--primary); }
         .empty-msg { color: #999; font-style: italic; font-size: 0.9rem; }
 
-        /* 3. FOOTER SECTION */
-        footer {
-            background-color: var(--primary);
-            color: #fff;
-            text-align: center;
-            padding: 20px 0;
-            margin-top: auto;
-            border-top: 5px solid var(--accent);
-        }
-        footer .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        footer p { margin: 5px 0; opacity: 0.9; font-size: 0.95rem; line-height: 1.6; }
-        footer strong { font-weight: 700; color: #fff; }
+        /* FOOTER */
+        footer { background-color: var(--primary); color: #fff; text-align: center; padding: 20px 0; margin-top: auto; border-top: 5px solid var(--accent); }
     </style>
 </head>
 <body>
 
-    <!-- 1. HEADER -->
-    <header>
-        <div class="header-container">
-            <!-- Logo từ link bạn cung cấp -->
-            <img src="https://bdvh.hcmus.edu.vn/images/logo2_bdvh.jpg" alt="Logo BDVH HCMUS" class="logo">
-            <div class="header-text">
-                <h1>HỆ THỐNG ÔN TẬP</h1>
-                <p>Ngân hàng đề thi trực tuyến - Trung tâm Bồi dưỡng Văn hóa</p>
-            </div>
-        </div>
-    </header>
-
-    <!-- 2. BODY -->
-    <div class="main-body">
-        <div class="domain-grid" id="app-content">
-            <div style="width: 100%; text-align: center; padding: 50px;">Đang tải dữ liệu...</div>
+<header>
+    <div class="header-container">
+        <img src="https://bdvh.hcmus.edu.vn/images/logo2_bdvh.jpg" alt="Logo BDVH HCMUS" class="logo">
+        <div class="header-text">
+            <h1>HỆ THỐNG ÔN TẬP</h1>
+            <p>Ngân hàng đề thi trực tuyến - Trung tâm Bồi dưỡng Văn hóa</p>
         </div>
     </div>
+</header>
 
-    <!-- 3. FOOTER -->
-    <footer>
-        <div class="container">
-            <p><strong>Tác giả: ThS. Đinh Quốc Tuấn</strong> - Giảng viên trường Đại học Khoa học Tự nhiên, ĐHQG-HCM</p>
-            <p>Bản quyền thuộc về Đinh Quốc Tuấn &copy; 2025</p>
-            <p>Địa chỉ: 227 Nguyễn Văn Cừ, Phường Chợ Quán, TP.HCM</p>
-        </div>
-    </footer>
+<div class="main-body">
+    <div class="domain-grid" id="app-content">
+        <div style="width: 100%; text-align: center; padding: 50px;">Đang tải dữ liệu...</div>
+    </div>
+</div>
 
-<!-- Kịch bản xử lý dữ liệu -->
+<footer>
+    <div class="container">
+        <p><strong>Tác giả: ThS. Đinh Quốc Tuấn</strong> - ĐH Khoa học Tự nhiên, ĐHQG-HCM</p>
+        <p>Bản quyền thuộc về Đinh Quốc Tuấn &copy; 2025</p>
+    </div>
+</footer>
+
+<!-- IMPORT SCRIPTS -->
+<script src="app.js"></script>
+<script src="data.js"></script>
+
 <script>
-    /**
-     * CORE: ĐỊNH NGHĨA LỚP ĐỐI TƯỢNG
-     */
-    class Exam {
-        constructor(id, title, time, filename) {
-            this.id = id;
-            this.title = title;
-            this.time = time;
-            this.filename = filename;
-        }
-        getUrl(folder) { return `${folder}/${this.filename}`; }
-    }
-
-    class Subject {
-        constructor(name, folder) {
-            this.name = name;
-            this.folder = folder;
-            this.exams = [];
-        }
-        addExam(exam) {
-            this.exams.push(exam);
-            return this;
-        }
-    }
-
-    class Domain {
-        constructor(name, icon) {
-            this.name = name;
-            this.icon = icon;
-            this.subjects = [];
-        }
-        addSubject(subject) {
-            this.subjects.push(subject);
-            return this;
-        }
-    }
-
-    /**
-     * DATA: DỮ LIỆU ĐỀ THI (4 KHU VỰC)
-     */
-
-    // --- KHU 1: TOÁN (TOAN) ---
-    const mathDomain = new Domain("Toán Học", "📐");
-    
-    const toan6 = new Subject("Toán 6", "Toan6");
-    // toan6.addExam(new Exam("T6_01", "Đề khảo sát đầu năm", "60p", "de1.html"));
-    toan6.addExam(new Exam("T6_CK1_01", "Đề Cuối Kỳ 1 - Số 01", "60 phút", "T6_CK1_2526_01.html"));
-    const toan7 = new Subject("Toán 7", "Toan7");
-
-    const toan10 = new Subject("Toán 10", "Toan10");
-
-    const toan11 = new Subject("Toán 11", "Toan11");
-    toan11.addExam(new Exam("21", "Đề kiểm tra số 21", "90 phút", "de21.html"))
-          .addExam(new Exam("22", "Đề kiểm tra số 22", "90 phút", "de22.html"));
-
-    mathDomain.addSubject(toan6).addSubject(toan7).addSubject(toan10).addSubject(toan11);
-
-
-    // --- KHU 2: KHOA HỌC TỰ NHIÊN (KHTN) ---
-    const scienceDomain = new Domain("Khoa Học Tự Nhiên", "🧪");
-    
-    const khtn6 = new Subject("KHTN 6", "KHTN6");
-    // khtn6.addExam(new Exam("K6_GK1", "Giữa kỳ 1", "45p", "de1.html"));
-
-    const ly10 = new Subject("Vật Lý 10", "Ly10");
-    const hoa10 = new Subject("Hóa Học 10", "Hoa10");
-
-    scienceDomain.addSubject(khtn6).addSubject(ly10).addSubject(hoa10);
-
-
-    // --- KHU 3: KHOA HỌC XÃ HỘI (KHXH) ---
-    const socialDomain = new Domain("Khoa Học Xã Hội", "📚");
-
-    const van7 = new Subject("Ngữ Văn 7", "Van7");
-    const van10 = new Subject("Ngữ Văn 10", "Van10");
-    const su10 = new Subject("Lịch Sử 10", "Su10");
-
-    socialDomain.addSubject(van7).addSubject(van10).addSubject(su10);
-
-
-    // --- KHU 4: NGHIÊN CỨU KHOA HỌC (NCKH) ---
-    const researchDomain = new Domain("Nghiên Cứu Khoa Học", "🔬");
-    
-    const nckh_duan = new Subject("Dự án STEM", "NCKH");
-    // nckh_duan.addExam(new Exam("DA_01", "Báo cáo Robot", "N/A", "baocao1.html"));
-
-    researchDomain.addSubject(nckh_duan);
-
-  // --- KHU 5: CÁC MÔN PHỤ KHÁC ---
-    const researchDomain = new Domain("MÔN KHÁC", "🔬");
-    
-    const cn7 = new Subject("Công Nghệ 7", "CN7");
-    cn7.addExam(new Exam("CN7_CK1_01", "Đề Cuối Kỳ 1 - Số 01", "60 phút", "CN7_CK1_2526_01.html"));// nckh_duan.addExam(new Exam("DA_01", "Báo cáo Robot", "N/A", "baocao1.html"));
-
-    researchDomain.addSubject(nckh_duan);
-    // TỔNG HỢP DỮ LIỆU
-    const database = [mathDomain, scienceDomain, socialDomain, researchDomain];
-
-    /**
-     * UI: RENDER GIAO DIỆN
-     */
+    // Hàm render giao diện dựa trên database từ data.js
     function renderApp() {
         const container = document.getElementById('app-content');
-        container.innerHTML = ''; 
+        container.innerHTML = '';
+
+        if (typeof database === 'undefined' || !database) {
+            container.innerHTML = '<div style="color:red; text-align:center;">Lỗi: Không tìm thấy dữ liệu (database). Kiểm tra file data.js</div>';
+            return;
+        }
 
         database.forEach(domain => {
-            // Tạo Card cho từng Lĩnh vực (Domain)
             const card = document.createElement('div');
             card.className = 'domain-card';
 
-            // Header của Card
             const header = document.createElement('div');
             header.className = 'domain-header';
             header.innerHTML = `<span class="domain-icon">${domain.icon}</span><h3 class="domain-title">${domain.name}</h3>`;
             card.appendChild(header);
 
-            // Nội dung của Card
             const content = document.createElement('div');
             content.className = 'domain-content';
 
@@ -330,32 +100,28 @@
                 domain.subjects.forEach(sub => {
                     const subDiv = document.createElement('div');
                     subDiv.className = 'subject-item';
-                    
-                    // Tiêu đề môn học
+
                     const subTitle = document.createElement('div');
                     subTitle.className = 'subject-title';
                     subTitle.innerHTML = `${sub.name} <span style="font-weight:normal; font-size:0.8em; color:#777">(${sub.exams.length})</span>`;
                     subDiv.appendChild(subTitle);
 
-                    // Danh sách đề thi
                     const examList = document.createElement('div');
                     if (sub.exams.length === 0) {
                         examList.innerHTML = '<div class="empty-msg">Đang cập nhật đề...</div>';
                     } else {
                         sub.exams.forEach(exam => {
                             const link = document.createElement('a');
-                            link.href = exam.getUrl(sub.folder);
+                            link.href = exam.getUrl(sub.folder); // Tạo link: folder/filename
                             link.className = 'exam-link';
-                            link.innerHTML = `📝 ${exam.title} <span style="float:right; font-size:0.8em; color:#666">⏱️ ${exam.time}</span>`;
+                            link.innerHTML = `${exam.title} <span style="float:right; font-size:0.8em; color:#666">${exam.time}</span>`;
                             examList.appendChild(link);
                         });
                     }
-                    
                     subDiv.appendChild(examList);
                     content.appendChild(subDiv);
                 });
             }
-
             card.appendChild(content);
             container.appendChild(card);
         });
