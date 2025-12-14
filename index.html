@@ -68,17 +68,83 @@
 </footer>
 
 <!-- IMPORT SCRIPTS -->
+<!-- Thứ tự rất quan trọng: app.js chạy trước để định nghĩa Class, sau đó data.js dùng Class đó -->
 <script src="app.js"></script>
 <script src="data.js"></script>
 
 <script>
-    // Hàm render giao diện dựa trên database từ data.js
+    // --- APP.JS CONTENT ---
+    class Exam {
+        constructor(id, title, time, filename) {
+            this.id = id;
+            this.title = title;
+            this.time = time;
+            this.filename = filename;
+        }
+        getUrl(folder) {
+            return `${folder}/${this.filename}`;
+        }
+    }
+
+    class Subject {
+        constructor(name, folder) {
+            this.name = name;
+            this.folder = folder; 
+            this.exams = [];
+        }
+        
+        addExam(exam) {
+            this.exams.push(exam);
+            return this; 
+        }
+    }
+
+    class Domain {
+        constructor(name, icon) {
+            this.name = name;
+            this.icon = icon;
+            this.subjects = [];
+        }
+
+        addSubject(subject) {
+            this.subjects.push(subject);
+            return this;
+        }
+    }
+
+    // --- DATA.JS CONTENT ---
+    const mathDomain = new Domain("Toán Học", "📐");
+    const toan6 = new Subject("Toán 6", "Toan6");
+    toan6.addExam(new Exam("T6_CK1_01", "Đề Cuối Kỳ 1 - Số 01", "90 phút", "T6_CK1_2526_01.html"));
+    const toan11 = new Subject("Toán 11", "Toan11");
+    mathDomain.addSubject(toan6).addSubject(toan11);
+
+    const scienceDomain = new Domain("Khoa Học Tự Nhiên", "🧪");
+    const khtn6 = new Subject("KHTN 6", "KHTN6");
+    scienceDomain.addSubject(khtn6);
+
+    const socialDomain = new Domain("Khoa Học Xã Hội", "📚");
+    const van7 = new Subject("Ngữ Văn 7", "Van7");
+    socialDomain.addSubject(van7);
+
+    const otherDomain = new Domain("MÔN KHÁC", "💡");
+    const cn7 = new Subject("Công Nghệ 7", "MonPhu"); 
+    cn7.addExam(new Exam("CN7_CK1_01", "Đề Cuối Kỳ 1 - Số 01", "45 phút", "CN7_CK1_2526_01.html"));
+    otherDomain.addSubject(cn7);
+
+    const database = [mathDomain, scienceDomain, socialDomain, otherDomain];
+
+    // --- RENDER LOGIC ---
     function renderApp() {
         const container = document.getElementById('app-content');
         container.innerHTML = '';
 
         if (typeof database === 'undefined' || !database) {
-            container.innerHTML = '<div style="color:red; text-align:center;">Lỗi: Không tìm thấy dữ liệu (database). Kiểm tra file data.js</div>';
+            container.innerHTML = `
+                <div style="width:100%; text-align:center; color:red; padding:20px; border:1px solid red; background:#fff5f5;">
+                    <h3>⚠️ Lỗi Dữ Liệu!</h3>
+                    <p>Không tìm thấy biến <code>database</code>.</p>
+                </div>`;
             return;
         }
 
@@ -112,7 +178,7 @@
                     } else {
                         sub.exams.forEach(exam => {
                             const link = document.createElement('a');
-                            link.href = exam.getUrl(sub.folder); // Tạo link: folder/filename
+                            link.href = exam.getUrl(sub.folder); 
                             link.className = 'exam-link';
                             link.innerHTML = `${exam.title} <span style="float:right; font-size:0.8em; color:#666">${exam.time}</span>`;
                             examList.appendChild(link);
@@ -127,7 +193,14 @@
         });
     }
 
-    document.addEventListener('DOMContentLoaded', renderApp);
+    document.addEventListener('DOMContentLoaded', () => {
+        try {
+            renderApp();
+        } catch (e) {
+            console.error(e);
+            document.getElementById('app-content').innerHTML = '<div style="color:red; text-align:center;">Lỗi Javascript: ' + e.message + '</div>';
+        }
+    });
 </script>
 
 </body>
