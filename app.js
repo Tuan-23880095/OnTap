@@ -1,86 +1,59 @@
 /**
- * LỚP ĐỐI TƯỢNG (OOP)
+ * APP.JS - File xử lý chung cho toàn bộ hệ thống
+ * Chứa logic gửi điểm về Google Sheet
  */
 
-// Class đại diện cho một Đề thi
-class Exam {
-    constructor(id, title, time, folder, filename) {
-        this.id = id;
-        this.title = title;
-        this.time = time;
-        this.path = `${folder}/${filename}`; // Tự động tạo đường dẫn: Toan11/de22.html
-    }
-}
+// --- CẤU HÌNH ĐƯỜNG DẪN GOOGLE SCRIPT (Sửa link duy nhất tại đây) ---
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx5zUgAsa7Q_f9QIEjYGZx0PTydTk7Pz3A-_XKNmRKp3KIm9LrIEHWfT6gePHWPRnvX/exec";
 
-// Class đại diện cho một Môn học/Lĩnh vực
-class Subject {
-    constructor(name, code) {
-        this.name = name;
-        this.code = code; // Ví dụ: 'toan', 'van'
-        this.exams = [];
-    }
+/**
+ * Hàm gửi dữ liệu đi
+ * Hàm này sẽ lấy dữ liệu từ biến toàn cục window.examData
+ */
+function sendToGoogleSheet() {
+    const btn = document.getElementById('btn-send-sheet');
+    const status = document.getElementById('submit-status');
+    const loading = document.getElementById('loading-overlay');
 
-    addExam(exam) {
-        this.exams.push(exam);
-    }
-}
-
-// Class quản lý hệ thống thi (Xử lý nộp bài)
-class ExamSystem {
-    constructor(googleScriptUrl) {
-        this.scriptUrl = googleScriptUrl;
+    // Kiểm tra dữ liệu
+    if (!window.examData) {
+        alert("Lỗi: Không tìm thấy dữ liệu bài thi!");
+        return;
     }
 
-    // Hàm chấm điểm và gửi dữ liệu
-    submit(studentName, studentClass, answersData) {
-        if (!studentName) {
-            alert("Vui lòng nhập họ tên!");
-            return;
-        }
-
-        // Tính điểm (Logic đơn giản demo, thực tế lấy từ data từng đề)
-        let score = 0;
-        let details = [];
-        let totalQuestions = 0;
-
-        // Giả lập chấm điểm dựa trên data truyền vào (cần cấu trúc data câu hỏi ở từng file html)
-        // Ở đây ta chỉ gom dữ liệu để gửi đi
-        
-        const payload = {
-            timestamp: new Date().toLocaleString(),
-            name: studentName,
-            class: studentClass,
-            score: "Chờ chấm", // Hoặc biến score tính được
-            details: JSON.stringify(answersData) // Chi tiết từng câu
-        };
-
-        this.sendToSheet(payload);
+    if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.includes("PASTE_YOUR")) {
+        alert("Lỗi: Chưa cấu hình đường dẫn Google Script trong file app.js!");
+        return;
     }
 
-    sendToSheet(data) {
-        const btn = document.getElementById('btnSubmit');
-        const originalText = btn.innerText;
-        btn.innerText = "Đang gửi...";
+    // Hiển thị trạng thái đang gửi
+    if(loading) loading.style.display = 'block';
+    if(btn) {
         btn.disabled = true;
-
-        fetch(this.scriptUrl, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        })
-        .then(() => {
-            alert("✅ Đã nộp bài thành công!");
-            btn.innerText = "Đã nộp";
-        })
-        .catch(err => {
-            alert("❌ Lỗi kết nối: " + err);
-            btn.innerText = originalText;
-            btn.disabled = false;
-        });
+        btn.textContent = "Đang gửi...";
     }
-}
 
-// Khởi tạo hệ thống với URL Google Script của bạn
-// BẠN CẦN THAY URL NÀY
-const MyExamSystem = new ExamSystem("https://script.google.com/macros/s/AKfycbx5zUgAsa7Q_f9QIEjYGZx0PTydTk7Pz3A-_XKNmRKp3Klm9LrlEHWfT6gePHWPRnvX/exec");
+    // Gửi dữ liệu
+    fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors', // Quan trọng để tránh lỗi CORS
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(window.examData)
+    })
+    .then(() => {
+        // Xử lý khi thành công
+        if(loading) loading.style.display = 'none';
+        if(status) status.style.display = 'block';
+        if(btn) btn.style.display = 'none';
+        // alert("Đã gửi kết quả thành công!"); // Có thể bật nếu muốn thông báo pop-up
+    })
+    .catch(err => {
+        // Xử lý khi lỗi
+        if(loading) loading.style.display = 'none';
+        alert("Có lỗi xảy ra khi kết nối: " + err);
+        if(btn) {
+            btn.disabled = false;
+            btn.textContent = "Gửi lại";
+        }
+    });
+}
