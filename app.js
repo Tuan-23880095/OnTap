@@ -4,7 +4,7 @@
  */
 
 // --- CẤU HÌNH ĐƯỜNG DẪN GOOGLE SCRIPT ---
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx5zUgAsa7Q_f9QIEjYGZx0PTydTk7Pz3A-_XKNmRKp3KIm9LrIEHWfT6gePHWPRnvX/exec";
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyoSisVZcNJcRLtWcATK30mk1-6yl0gUPJJDpKdMpd1knKD8OyEBUDX4PDygomO/exec";
 
 // --- ĐỊNH NGHĨA CÁC LỚP ĐỐI TƯỢNG (CLASSES) ---
 
