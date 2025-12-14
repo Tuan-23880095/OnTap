@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đề Kiểm Tra Công Nghệ 7</title>
+    <title>Đề Kiểm Tra Công Nghệ 7 - Cuối HK1</title>
     <style>
         :root {
-            --primary: #16a34a; /* Green-600 */
-            --primary-dark: #15803d;
+            --primary: #15803d; /* Green 700 */
+            --light-green: #dcfce7;
             --bg: #f3f4f6;
             --white: #ffffff;
             --text: #1f2937;
@@ -15,472 +15,391 @@
             --blue: #2563eb;
             --red: #dc2626;
         }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            margin: 0;
-            padding-bottom: 60px; /* Space for footer */
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        /* --- Header & Screens --- */
-        .screen { display: none; }
-        .screen.active { display: block; animation: fadeIn 0.3s ease-in; }
-
+        body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding-bottom: 80px; }
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        
+        /* Screens */
+        .screen { display: none; animation: fadeIn 0.4s; }
+        .screen.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .card {
-            background: var(--white);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            border: 1px solid var(--border);
-        }
+        /* Card Style */
+        .card { background: var(--white); border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border: 1px solid var(--border); }
+        .card h3 { margin-top: 0; font-size: 1.1rem; color: #111827; }
+        .badge { display: inline-block; font-size: 0.75rem; font-weight: 700; color: var(--primary); background: var(--light-green); padding: 2px 8px; border-radius: 4px; margin-bottom: 8px; }
 
-        h1, h2, h3 { margin-top: 0; }
-        
-        /* --- Inputs & Buttons --- */
-        input[type="text"], textarea {
-            width: 100%;
-            padding: 12px;
-            margin: 8px 0 20px 0;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            box-sizing: border-box;
-            font-size: 16px;
-        }
-
-        button.btn {
-            background-color: var(--primary);
-            color: white;
-            padding: 12px 24px;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.2s;
-            width: 100%;
-        }
-
-        button.btn:hover { background-color: var(--primary-dark); }
+        /* Inputs & Buttons */
+        input[type="text"], textarea { width: 100%; padding: 12px; margin: 8px 0 20px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; }
+        button.btn { background-color: var(--primary); color: white; padding: 12px 24px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; font-size: 1rem; transition: 0.2s; }
+        button.btn:hover { opacity: 0.9; }
         button.btn:disabled { background-color: #9ca3af; cursor: not-allowed; }
 
-        /* --- Quiz Styles --- */
-        .question-badge {
-            font-size: 12px;
-            font-weight: bold;
-            color: #6b7280;
-            text-transform: uppercase;
-            margin-bottom: 8px;
-            display: block;
-        }
+        /* Question Styles */
+        .option-btn { display: block; width: 100%; text-align: left; padding: 12px; border: 2px solid var(--border); border-radius: 8px; background: white; margin-bottom: 8px; cursor: pointer; transition: 0.2s; }
+        .option-btn:hover { background: #f9fafb; border-color: var(--primary); }
+        .option-btn.selected { background: #eff6ff; border-color: var(--blue); color: var(--blue); font-weight: 600; }
+        .option-btn.correct { background: #dcfce7; border-color: var(--primary); }
+        .option-btn.wrong { background: #fee2e2; border-color: var(--red); }
 
-        .question-text { font-size: 18px; font-weight: 600; margin-bottom: 15px; }
+        /* True/False Group */
+        .tf-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        .tf-table th, .tf-table td { border: 1px solid var(--border); padding: 10px; text-align: left; }
+        .tf-table th { background: #f8fafc; text-align: center; }
+        .tf-btn { width: 60px; padding: 5px; border-radius: 4px; border: 1px solid #ccc; cursor: pointer; }
+        .tf-btn.selected { background: var(--blue); color: white; border-color: var(--blue); }
 
-        .options-grid { display: grid; gap: 10px; }
+        /* Drag & Drop (Click Simulation) */
+        .fill-area { line-height: 2; font-size: 1.1rem; background: #f0f9ff; padding: 15px; border-radius: 8px; border: 1px dashed var(--blue); margin-bottom: 10px; }
+        .drop-slot { display: inline-block; min-width: 80px; height: 30px; border-bottom: 2px solid #94a3b8; text-align: center; color: var(--blue); font-weight: bold; margin: 0 5px; cursor: pointer; background: white; vertical-align: bottom; }
+        .word-bank { display: flex; flex-wrap: wrap; gap: 10px; }
+        .word-item { padding: 6px 12px; background: #e2e8f0; border-radius: 20px; cursor: pointer; font-size: 0.9rem; user-select: none; }
+        .word-item.used { opacity: 0.5; pointer-events: none; text-decoration: line-through; }
 
-        .option-btn {
-            background: var(--white);
-            border: 2px solid var(--border);
-            padding: 12px;
-            border-radius: 8px;
-            text-align: left;
-            cursor: pointer;
-            font-size: 15px;
-            transition: all 0.2s;
-        }
+        /* Sticky Header */
+        .header { position: fixed; top: 0; left: 0; right: 0; background: white; padding: 10px 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); z-index: 100; display: flex; justify-content: space-between; align-items: center; }
+        .timer { font-weight: bold; color: var(--red); font-family: monospace; font-size: 1.2rem; }
 
-        .option-btn:hover { background-color: #f9fafb; border-color: var(--blue); }
-        .option-btn.selected { background-color: #eff6ff; border-color: var(--blue); color: var(--blue); font-weight: 500; }
-
-        /* Review Mode Colors */
-        .option-btn.correct { background-color: #dcfce7; border-color: var(--primary); color: var(--primary-dark); }
-        .option-btn.wrong { background-color: #fee2e2; border-color: var(--red); color: #991b1b; }
-
-        /* Fill in Blank */
-        .word-bank { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 15px; }
-        .word-btn {
-            background: #eef2ff; color: var(--blue); border: 1px solid #c7d2fe;
-            padding: 6px 12px; border-radius: 20px; cursor: pointer; font-size: 14px;
-        }
-        .word-btn.selected { background: var(--blue); color: white; }
-        
-        .fill-blank-area {
-            background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px dashed #cbd5e1;
-            font-size: 17px; line-height: 1.6;
-        }
-        .fill-slot {
-            display: inline-block; min-width: 80px; border-bottom: 2px solid var(--blue);
-            text-align: center; font-weight: bold; color: var(--blue); margin: 0 5px; cursor: pointer;
-        }
-
-        /* --- Header Fixed --- */
-        .sticky-header {
-            position: fixed; top: 0; left: 0; right: 0;
-            background: white; padding: 10px 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            display: flex; justify-content: space-between; align-items: center;
-            z-index: 100;
-        }
-        .timer { font-family: monospace; font-size: 18px; font-weight: bold; color: var(--text); }
-        .timer.warning { color: var(--red); animation: pulse 1s infinite; }
-
-        /* --- Result --- */
-        .score-box {
-            text-align: center; padding: 20px; background: #ecfdf5; 
-            border: 2px solid var(--primary); border-radius: 12px; margin-bottom: 20px;
-        }
-        .score-num { font-size: 40px; font-weight: 800; color: var(--primary); }
-        .explanation-box { background: #fffbeb; padding: 10px; border: 1px solid #fcd34d; border-radius: 8px; margin-top: 10px; font-size: 14px;}
-
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+        /* Modal */
+        #loading-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 200; text-align: center; padding-top: 20%; color: white; font-size: 1.5rem; }
     </style>
 </head>
 <body>
 
-    <!-- START SCREEN -->
-    <div id="start-screen" class="screen active container" style="text-align: center; padding-top: 50px;">
-        <div class="card">
-            <h1 style="color: var(--primary);">KIỂM TRA CÔNG NGHỆ 7</h1>
-            <p>Thời gian: 45 phút | Số lượng: 50 câu</p>
-            <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
-            
-            <div style="text-align: left;">
-                <label>Họ và tên:</label>
-                <input type="text" id="student-name" placeholder="Nhập họ tên...">
-                
-                <label>Lớp:</label>
-                <input type="text" id="student-class" placeholder="Nhập lớp (VD: 7A1)...">
-            </div>
+<!-- LOADING -->
+<div id="loading-overlay">Đang gửi dữ liệu... vui lòng chờ...</div>
 
-            <button class="btn" onclick="startQuiz()">BẮT ĐẦU LÀM BÀI</button>
+<!-- START SCREEN -->
+<div id="start-screen" class="screen active container" style="text-align: center; margin-top: 50px;">
+    <div class="card">
+        <h1 style="color: var(--primary);">ĐỀ THI CÔNG NGHỆ 7</h1>
+        <p>HKI - Thời gian: 45 phút</p>
+        <div style="text-align: left; margin-top: 20px;">
+            <label>Họ và tên:</label>
+            <input type="text" id="s-name" placeholder="Nhập họ tên...">
+            <label>Lớp:</label>
+            <input type="text" id="s-class" placeholder="Nhập lớp...">
         </div>
+        <button class="btn" onclick="startQuiz()">BẮT ĐẦU LÀM BÀI</button>
     </div>
+</div>
 
-    <!-- QUIZ SCREEN -->
-    <div id="quiz-screen" class="screen">
-        <div class="sticky-header">
-            <div>
-                <b id="display-name">Học sinh</b>
-            </div>
-            <div id="timer" class="timer">45:00</div>
-            <button onclick="submitQuiz()" style="background: var(--blue); color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer;">Nộp bài</button>
-        </div>
-
-        <div class="container" style="margin-top: 60px;" id="questions-container">
-            <!-- Questions generated by JS -->
-        </div>
+<!-- QUIZ SCREEN -->
+<div id="quiz-screen" class="screen">
+    <div class="header">
+        <div id="info-display" style="font-weight:bold; font-size: 0.9rem;">Học sinh</div>
+        <div class="timer" id="timer">45:00</div>
+        <button onclick="confirmSubmit()" style="background:var(--blue); color:white; border:none; padding:8px 15px; border-radius:6px; cursor:pointer;">Nộp bài</button>
     </div>
+    <div class="container" style="margin-top: 60px;" id="questions-list"></div>
+</div>
 
-    <!-- RESULT SCREEN -->
-    <div id="result-screen" class="screen container" style="text-align: center; padding-top: 20px;">
-        <div class="card">
-            <h2>KẾT QUẢ BÀI LÀM</h2>
-            <p id="result-info"></p>
-            
-            <div class="score-box">
-                <div>ĐIỂM TRẮC NGHIỆM</div>
-                <div class="score-num" id="final-score">0.0</div>
-                <div>Trên thang điểm 9.0 (45 câu)</div>
-            </div>
-
-            <div style="background: #fdf2f8; padding: 15px; border-radius: 8px; color: #db2777; margin-bottom: 20px;">
-                <b>Lưu ý:</b> Phần tự luận (5 câu) các em tự đối chiếu với đáp án gợi ý bên dưới.
-            </div>
-
-            <button class="btn" onclick="location.reload()" style="background: #374151;">Làm lại bài thi</button>
+<!-- RESULT SCREEN -->
+<div id="result-screen" class="screen container" style="text-align: center;">
+    <div class="card">
+        <h2 style="color: var(--primary);">KẾT QUẢ</h2>
+        <h1 id="final-score" style="font-size: 3rem; margin: 10px 0; color: var(--blue);"></h1>
+        <p>Điểm phần trắc nghiệm & điền khuyết (Thang điểm 10)</p>
+        <p style="font-size: 0.9rem; color: gray;">* Phần tự luận chưa tính trong điểm số này.</p>
+        
+        <div id="submit-status" style="margin-top: 20px; padding: 10px; background: #f0fdf4; color: #15803d; border-radius: 8px; display: none;">
+            ✅ Đã gửi kết quả thành công cho giáo viên!
         </div>
-
-        <div style="text-align: left;" id="review-container">
-            <!-- Review content -->
-        </div>
+        <button id="btn-send-sheet" class="btn" style="background: #0f766e; margin-top: 10px;" onclick="sendToGoogleSheet()">Gửi kết quả cho Giáo viên</button>
+        <button class="btn" style="background: #4b5563; margin-top: 10px;" onclick="location.reload()">Làm lại</button>
     </div>
+    <div id="review-list" style="text-align: left;"></div>
+</div>
 
-    <script>
-        // --- DATA ---
-        const questions = [
-            // TRẮC NGHIỆM (30)
-            { id: 1, type: 'mc', q: "Giâm cành là phương pháp nhân giống:", options: ["Hữu tính", "Vô tính", "Nuôi cấy mô", "Lai tạo"], a: 1 },
-            { id: 2, type: 'mc', q: "Cây nào sau đây dễ nhân giống bằng phương pháp giâm cành?", options: ["Lúa", "Ngô", "Mía", "Xoài"], a: 2 },
-            { id: 3, type: 'mc', q: "Độ dài tiêu chuẩn của cành giâm thường là:", options: ["5-10 cm", "15-20 cm", "25-30 cm", "40-50 cm"], a: 1 },
-            { id: 4, type: 'mc', q: "Quy trình giâm cành gồm mấy bước chính?", options: ["3 bước", "4 bước", "5 bước", "6 bước"], a: 1 },
-            { id: 5, type: 'mc', q: "Giá thể giâm cành cần đảm bảo yêu cầu nào?", options: ["Nén chặt, giữ nước tốt", "Tơi xốp, đủ ẩm, sạch bệnh", "Nhiều đá sỏi", "Khô ráo hoàn toàn"], a: 1 },
-            { id: 6, type: 'mc', q: "Có mấy cách cắm cành giâm vào giá thể?", options: ["1", "2", "3", "4"], a: 2 },
-            { id: 7, type: 'mc', q: "Cây cải xanh có thể thu hoạch sau khoảng bao nhiêu ngày?", options: ["15-20 ngày", "30-40 ngày", "50-60 ngày", "2 tháng"], a: 1 },
-            { id: 8, type: 'mc', q: "Để đảm bảo an toàn, nên trồng trọt theo hướng:", options: ["Canh tác hóa học", "Canh tác hữu cơ", "Dùng thuốc kích thích", "Tăng cường phân vô cơ"], a: 1 },
-            { id: 9, type: 'mc', q: "Rừng có vai trò gì trong việc điều hòa không khí?", options: ["Cung cấp CO2", "Cung cấp O2, thu nhận CO2", "Làm nóng không khí", "Ngăn cản gió"], a: 1 },
-            { id: 10, type: 'mc', q: "Rừng nào có vai trò chắn gió, chống cát bay ven biển?", options: ["Rừng sản xuất", "Rừng đặc dụng", "Rừng phòng hộ ven biển", "Rừng nguyên sinh"], a: 2 },
-            { id: 11, type: 'mc', q: "Rừng sản xuất chủ yếu để:", options: ["Bảo tồn di tích", "Khai thác gỗ và lâm sản", "Chắn sóng", "Nghiên cứu khoa học"], a: 1 },
-            { id: 12, type: 'mc', q: "Vườn quốc gia Cúc Phương thuộc loại rừng nào?", options: ["Rừng sản xuất", "Rừng phòng hộ", "Rừng đặc dụng", "Rừng ngập mặn"], a: 2 },
-            { id: 13, type: 'mc', q: "Bước đầu tiên trong quy trình trồng cải xanh là:", options: ["Gieo hạt", "Chuẩn bị đất trồng", "Tưới nước", "Bón phân"], a: 1 },
-            { id: 14, type: 'mc', q: "Khi phun thuốc trừ sâu, cần tuân thủ nguyên tắc:", options: ["Phun ngược chiều gió", "Phun theo chiều gió", "Không cần đeo khẩu trang", "Phun lúc nắng gắt"], a: 1 },
-            { id: 15, type: 'mc', q: "Cành giâm nên cắt vát để làm gì?", options: ["Để đẹp hơn", "Tăng diện tích tiếp xúc, dễ ra rễ", "Để dễ cầm", "Để tránh sâu bệnh"], a: 1 },
-            { id: 16, type: 'mc', q: "Loại cây nào sau đây KHÔNG thường nhân giống bằng giâm cành?", options: ["Sắn (Khoai mì)", "Dâu tằm", "Rau ngót", "Cây lúa"], a: 3 },
-            { id: 17, type: 'mc', q: "Ưu điểm của giâm cành là:", options: ["Cây con khác biệt hoàn toàn mẹ", "Giữ được đặc tính cây mẹ, thời gian sinh trưởng ngắn", "Cây sống lâu hơn", "Bộ rễ cọc chắc chắn"], a: 1 },
-            { id: 18, type: 'mc', q: "Khi chuẩn bị đất trồng cải, nếu đất bị phèn mặn thì cần:", options: ["Bón vôi", "Tưới nhiều nước", "Phơi khô", "Bón phân đạm"], a: 0 },
-            { id: 19, type: 'mc', q: "Hạt giống cải xanh trước khi gieo nên xử lý bằng nước ấm tỉ lệ:", options: ["1 sôi : 1 lạnh", "2 sôi : 3 lạnh", "3 sôi : 2 lạnh", "100 độ C"], a: 1 },
-            { id: 20, type: 'mc', q: "Khoảng cách giữa các cây cải xanh khi trồng nên là:", options: ["2-3 cm", "10-15 cm", "30-40 cm", "50 cm"], a: 1 },
-            { id: 21, type: 'mc', q: "Rừng ngập mặn thường phân bố ở đâu?", options: ["Vùng núi cao", "Vùng ven biển cửa sông", "Vùng đồng bằng", "Vùng trung du"], a: 1 },
-            { id: 22, type: 'mc', q: "Vai trò hạn chế xói mòn, lũ lụt là của:", options: ["Rừng sản xuất", "Rừng phòng hộ đầu nguồn", "Rừng trồng lấy gỗ", "Rừng thưa"], a: 1 },
-            { id: 23, type: 'mc', q: "Nên tưới nước cho cải xanh vào thời điểm nào?", options: ["Giữa trưa", "Sáng sớm và chiều mát", "Ban đêm", "Bất cứ lúc nào"], a: 1 },
-            { id: 24, type: 'mc', q: "Khi cây cải xanh có 3-4 lá thật, cần làm gì?", options: ["Thu hoạch ngay", "Tỉa, dặm cây và bón thúc", "Ngừng tưới nước", "Phun thuốc diệt cỏ"], a: 1 },
-            { id: 25, type: 'mc', q: "Rừng tràm, rừng thông là cách phân loại theo:", options: ["Nguồn gốc", "Trữ lượng", "Loài cây", "Mục đích sử dụng"], a: 2 },
-            { id: 26, type: 'mc', q: "Rừng nguyên sinh thuộc nhóm phân loại theo:", options: ["Nguồn gốc hình thành", "Loài cây", "Trữ lượng", "Lập địa"], a: 0 },
-            { id: 27, type: 'mc', q: "Bước 'Tạo lỗ' trong quy trình giâm cành nhằm mục đích:", options: ["Để thoát nước", "Tránh làm dập gốc cành khi cắm", "Để bón phân", "Để tưới nước"], a: 1 },
-            { id: 28, type: 'mc', q: "Cây cải xanh cao trên bao nhiêu cm thì có thể thu hoạch?", options: ["5 cm", "10 cm", "15 cm", "30 cm"], a: 2 },
-            { id: 29, type: 'mc', q: "Biện pháp nào giúp bảo vệ môi trường khi trồng trọt?", options: ["Đốt rơm rạ", "Sử dụng chế phẩm sinh học", "Dùng thuốc hóa học liều cao", "Vứt bao bì thuốc bừa bãi"], a: 1 },
-            { id: 30, type: 'mc', q: "Rừng 'rất giàu', 'giàu', 'nghèo' là phân loại theo:", options: ["Diện tích", "Trữ lượng", "Độ cao", "Loại đất"], a: 1 },
-            
-            // ĐÚNG SAI (7)
-            { id: 31, type: 'tf', q: "Giâm cành là phương pháp nhân giống hữu tính.", a: 1 }, // Sai (Index 1)
-            { id: 32, type: 'tf', q: "Cây con từ giâm cành giữ được đặc tính của giống mẹ.", a: 0 }, // Đúng (Index 0)
-            { id: 33, type: 'tf', q: "Cải xanh chỉ trồng được vào mùa đông, không trồng được quanh năm.", a: 1 },
-            { id: 34, type: 'tf', q: "Nên bón phân hữu cơ cho rau để đảm bảo an toàn.", a: 0 },
-            { id: 35, type: 'tf', q: "Rừng đặc dụng dùng để khai thác gỗ xuất khẩu.", a: 1 },
-            { id: 36, type: 'tf', q: "Rừng giúp giảm tốc độ dòng chảy nước mưa, hạn chế xói mòn.", a: 0 },
-            { id: 37, type: 'tf', q: "Khi giâm cành, cần tỉa bớt lá để giảm sự thoát hơi nước.", a: 0 },
+<script>
+    // --- CẤU TRÚC ĐỀ THI ---
+    const questions = [
+        // 12 CÂU TRẮC NGHIỆM (0.25đ/câu = 3.0đ)
+        { id: 1, type: 'mc', q: "Giâm cành là phương pháp nhân giống:", opts: ["Hữu tính", "Vô tính", "Nuôi cấy mô", "Lai tạo"], a: 1 },
+        { id: 2, type: 'mc', q: "Cây nào dễ giâm cành?", opts: ["Lúa", "Ngô", "Mía", "Xoài"], a: 2 },
+        { id: 3, type: 'mc', q: "Chiều dài tiêu chuẩn cành giâm?", opts: ["5-10cm", "15-20cm", "30-40cm", "50cm"], a: 1 },
+        { id: 4, type: 'mc', q: "Quy trình giâm cành có mấy bước?", opts: ["3", "4", "5", "6"], a: 1 },
+        { id: 5, type: 'mc', q: "Đất trồng cải xanh cần:", opts: ["Nén chặt", "Ngập nước", "Tơi xốp", "Nhiều đá"], a: 2 },
+        { id: 6, type: 'mc', q: "Thời gian thu hoạch cải xanh?", opts: ["15-20 ngày", "30-40 ngày", "60 ngày", "3 tháng"], a: 1 },
+        { id: 7, type: 'mc', q: "Nên tưới rau vào lúc nào?", opts: ["Trưa nắng", "Sáng sớm/Chiều mát", "Đêm khuya", "Lúc nào cũng được"], a: 1 },
+        { id: 8, type: 'mc', q: "Vai trò rừng phòng hộ?", opts: ["Lấy gỗ", "Du lịch", "Chắn gió, chống xói mòn", "Nghiên cứu"], a: 2 },
+        { id: 9, type: 'mc', q: "Rừng đặc dụng dùng để:", opts: ["Bảo tồn thiên nhiên", "Khai thác gỗ", "Chắn cát", "Làm nương rẫy"], a: 0 },
+        { id: 10, type: 'mc', q: "Rừng sản xuất dùng để:", opts: ["Nghiên cứu", "Khai thác gỗ, lâm sản", "Chắn sóng", "Bảo tồn gene"], a: 1 },
+        { id: 11, type: 'mc', q: "Vườn quốc gia Cúc Phương là:", opts: ["Rừng sản xuất", "Rừng đặc dụng", "Rừng phòng hộ", "Rừng ngập mặn"], a: 1 },
+        { id: 12, type: 'mc', q: "Khi phun thuốc trừ sâu cần:", opts: ["Phun ngược gió", "Không đeo khẩu trang", "Phun theo chiều gió", "Phun buổi trưa"], a: 2 },
 
-            // ĐIỀN KHUYẾT (8)
-            { id: 38, type: 'fill', q: "Quy trình giâm cành: Tạo giá thể → Tạo lỗ → ___ → Tỉa bớt lá → Giâm vào giá thể.", bank: ["Cắt đoạn cành", "Tưới nước", "Bón phân", "Phơi nắng"], a: "Cắt đoạn cành" },
-            { id: 39, type: 'fill', q: "Cành giâm phải được lấy từ cây mẹ ___, không mang mầm bệnh.", bank: ["già cỗi", "khỏe", "non yếu", "ra hoa"], a: "khỏe" },
-            { id: 40, type: 'fill', q: "Trong điều kiện chủ động nước tưới và có ___, cải xanh có thể trồng quanh năm.", bank: ["phân bón", "thuốc trừ sâu", "mái che", "ánh đèn"], a: "mái che" },
-            { id: 41, type: 'fill', q: "Quy trình trồng cải xanh gồm 5 giai đoạn: Chuẩn bị đất → Chuẩn bị hạt giống → ___ → Chăm sóc → Thu hoạch.", bank: ["Gieo trồng", "Phơi hạt", "Ngâm nước", "Làm cỏ"], a: "Gieo trồng" },
-            { id: 42, type: 'fill', q: "Rừng là nơi sinh sống của thực vật, động vật và ___.", bank: ["con người", "vi sinh vật", "cá biển", "gia súc"], a: "vi sinh vật" },
-            { id: 43, type: 'fill', q: "Rừng phòng hộ giúp bảo vệ nguồn nước, bảo vệ đất, chống ___.", bank: ["khai thác", "xói mòn", "du lịch", "xâm nhập mặn"], a: "xói mòn" },
-            { id: 44, type: 'fill', q: "Rừng ___ được dùng để bảo tồn nguồn gen, nghiên cứu khoa học và du lịch.", bank: ["sản xuất", "phòng hộ", "đặc dụng", "ngập mặn"], a: "đặc dụng" },
-            { id: 45, type: 'fill', q: "Khi trồng cải xanh, cần tưới nước 2 lần/ngày vào sáng sớm và ___.", bank: ["buổi trưa", "chiều mát", "giữa đêm", "khi mưa"], a: "chiều mát" },
+        // 4 CÂU CHÙM ĐÚNG SAI (Mỗi ý 0.1đ -> 1 câu = 0.4đ -> 4 câu = 1.6đ)
+        { 
+            id: 13, type: 'tf-group', q: "Nhận định về phương pháp giâm cành:", 
+            items: [
+                { t: "Là phương pháp nhân giống hữu tính.", a: false },
+                { t: "Cây con giữ được đặc tính của cây mẹ.", a: true },
+                { t: "Hệ số nhân giống thấp, lâu thu hoạch.", a: false },
+                { t: "Mía, sắn, rau ngót dễ giâm cành.", a: true }
+            ]
+        },
+        { 
+            id: 14, type: 'tf-group', q: "Quy trình trồng rau cải xanh an toàn:", 
+            items: [
+                { t: "Nên dùng nhiều phân bón hóa học để cây lớn nhanh.", a: false },
+                { t: "Ưu tiên sử dụng phân hữu cơ, vi sinh.", a: true },
+                { t: "Tưới nước bất cứ khi nào rảnh.", a: false },
+                { t: "Ngưng phun thuốc hóa học trước khi thu hoạch theo quy định.", a: true }
+            ]
+        },
+        { 
+            id: 15, type: 'tf-group', q: "Vai trò của rừng:", 
+            items: [
+                { t: "Cung cấp Oxy, thu nhận CO2.", a: true },
+                { t: "Làm tăng nguy cơ lũ lụt.", a: false },
+                { t: "Chống xói mòn, rửa trôi đất.", a: true },
+                { t: "Là nơi sinh sống của động thực vật.", a: true }
+            ]
+        },
+        { 
+            id: 16, type: 'tf-group', q: "Phân loại rừng ở Việt Nam:", 
+            items: [
+                { t: "Rừng tràm là phân loại theo nguồn gốc.", a: false },
+                { t: "Rừng nguyên sinh là phân loại theo nguồn gốc.", a: true },
+                { t: "Rừng phòng hộ dùng để khai thác gỗ xuất khẩu.", a: false },
+                { t: "Rừng ngập mặn phân bố ở vùng ven biển.", a: true }
+            ]
+        },
 
-            // TỰ LUẬN (5)
-            { id: 46, type: 'short', q: "Nêu 2 ví dụ về cây dễ nhân giống bằng phương pháp giâm cành.", a: "Mía, sắn, dâu tằm, rau muống, rau ngót..." },
-            { id: 47, type: 'short', q: "Tại sao phải tỉa bớt lá khi giâm cành?", a: "Để giảm sự thoát hơi nước của cành giâm, giúp cành tập trung dinh dưỡng ra rễ." },
-            { id: 48, type: 'short', q: "Kể tên 3 loại dụng cụ cần thiết khi trồng rau cải xanh.", a: "Cuốc, xẻng, thùng tưới, gáo tưới nước." },
-            { id: 49, type: 'short', q: "Rừng ven biển có tác dụng chính là gì?", a: "Chắn gió, chống cát di động ven biển, che chở cho vùng đất phía trong." },
-            { id: 50, type: 'short', q: "Phân loại theo mục đích sử dụng, rừng được chia làm 3 loại nào?", a: "Rừng sản xuất, Rừng phòng hộ, Rừng đặc dụng." }
-        ];
+        // 5 CÂU ĐIỀN KHUYẾT (0.4đ/câu = 2.0đ)
+        { 
+            id: 17, type: 'fill', q: "Quy trình giâm cành: Tạo giá thể → Tạo lỗ → ...1... → Tỉa bớt lá → Giâm vào giá thể.", 
+            bank: ["Cắt cành", "Tưới nước", "Bón phân", "Phơi nắng"], a: ["Cắt cành"] 
+        },
+        { 
+            id: 18, type: 'fill', q: "Rừng là nơi sinh sống của thực vật, ...1... và vi sinh vật.", 
+            bank: ["con người", "động vật", "cá", "nhà cửa"], a: ["động vật"] 
+        },
+        { 
+            id: 19, type: 'fill', q: "Cần chọn cành giâm ở giai đoạn ...1..., không quá non, không quá già.", 
+            bank: ["ra hoa", "ổn định", "mới mọc", "khô héo"], a: ["ổn định"] 
+        },
+        { 
+            id: 20, type: 'fill', q: "Để cải tạo đất phèn, người ta thường bón ...1...", 
+            bank: ["đạm", "vôi", "nước", "lân"], a: ["vôi"] 
+        },
+        { 
+            id: 21, type: 'fill', q: "Rừng ...1... giúp chắn gió, bão, chống cát bay.", 
+            bank: ["sản xuất", "phòng hộ", "đặc dụng", "nguyên sinh"], a: ["phòng hộ"] 
+        },
 
-        let answers = {};
-        let timeLeft = 45 * 60;
-        let timerId;
+        // 5 CÂU TỰ LUẬN (Giáo viên chấm sau)
+        { id: 22, type: 'short', q: "Tại sao phải tỉa bớt lá khi giâm cành?" },
+        { id: 23, type: 'short', q: "Kể tên 3 dụng cụ trồng rau?" },
+        { id: 24, type: 'short', q: "Thế nào là canh tác hữu cơ?" },
+        { id: 25, type: 'short', q: "Nêu 2 ví dụ về rừng đặc dụng ở Việt Nam." },
+        { id: 26, type: 'short', q: "Em làm gì để bảo vệ rừng?" }
+    ];
 
-        // --- FUNCTIONS ---
+    let answers = {}; // Lưu đáp án
+    let timeLeft = 45 * 60;
+    let timerId;
 
-        function startQuiz() {
-            const name = document.getElementById('student-name').value;
-            const sClass = document.getElementById('student-class').value;
+    // --- LOGIC ---
 
-            if (!name || !sClass) {
-                alert("Vui lòng nhập đầy đủ Họ tên và Lớp!");
-                return;
+    function startQuiz() {
+        const name = document.getElementById('s-name').value;
+        const cls = document.getElementById('s-class').value;
+        if (!name || !cls) return alert("Vui lòng nhập tên và lớp!");
+
+        document.getElementById('info-display').innerText = `${name} - ${cls}`;
+        document.getElementById('start-screen').classList.remove('active');
+        document.getElementById('quiz-screen').classList.add('active');
+        
+        renderQuestions();
+        timerId = setInterval(() => {
+            timeLeft--;
+            const m = Math.floor(timeLeft/60);
+            const s = timeLeft%60;
+            document.getElementById('timer').innerText = `${m}:${s<10?'0':''}${s}`;
+            if(timeLeft<=0) submitQuiz();
+        }, 1000);
+    }
+
+    function renderQuestions() {
+        const list = document.getElementById('questions-list');
+        questions.forEach((q, idx) => {
+            let html = `<div class="card">
+                <span class="badge">Câu ${idx+1}</span>
+                <h3>${q.q}</h3>`;
+
+            // Render Trắc nghiệm
+            if (q.type === 'mc') {
+                q.opts.forEach((opt, oIdx) => {
+                    html += `<button class="option-btn" onclick="selectMC(${q.id}, ${oIdx}, this)">${String.fromCharCode(65+oIdx)}. ${opt}</button>`;
+                });
+            }
+            // Render Đúng Sai (Grid)
+            else if (q.type === 'tf-group') {
+                html += `<table class="tf-table">
+                    <tr><th>Nội dung</th><th>Đúng</th><th>Sai</th></tr>`;
+                q.items.forEach((item, iIdx) => {
+                    html += `<tr>
+                        <td>${item.t}</td>
+                        <td style="text-align:center"><button class="tf-btn" onclick="selectTF(${q.id}, ${iIdx}, true, this)">Đ</button></td>
+                        <td style="text-align:center"><button class="tf-btn" onclick="selectTF(${q.id}, ${iIdx}, false, this)">S</button></td>
+                    </tr>`;
+                });
+                html += `</table>`;
+            }
+            // Render Điền khuyết (Drag sim)
+            else if (q.type === 'fill') {
+                const parts = q.q.split('...1...');
+                html += `<div class="fill-area">${parts[0]} <span class="drop-slot" onclick="clearSlot(${q.id})" id="slot-${q.id}">...</span> ${parts[1]}</div>`;
+                html += `<div class="word-bank">`;
+                q.bank.forEach(w => {
+                    html += `<span class="word-item" onclick="fillSlot(${q.id}, '${w}', this)">${w}</span>`;
+                });
+                html += `</div>`;
+            }
+            // Render Tự luận
+            else if (q.type === 'short') {
+                html += `<textarea rows="3" placeholder="Nhập câu trả lời..." onchange="saveShort(${q.id}, this.value)"></textarea>`;
             }
 
-            document.getElementById('display-name').innerText = name + " - " + sClass;
-            document.getElementById('start-screen').classList.remove('active');
-            document.getElementById('quiz-screen').classList.add('active');
+            html += `</div>`;
+            list.innerHTML += html;
+        });
+    }
 
-            renderQuestions();
-            startTimer();
-        }
+    // --- XỬ LÝ CHỌN ĐÁP ÁN ---
 
-        function startTimer() {
-            timerId = setInterval(() => {
-                timeLeft--;
-                const m = Math.floor(timeLeft / 60);
-                const s = timeLeft % 60;
-                const timerEl = document.getElementById('timer');
-                timerEl.innerText = `${m}:${s < 10 ? '0' : ''}${s}`;
-                
-                if (timeLeft < 300) timerEl.classList.add('warning');
-                
-                if (timeLeft <= 0) {
-                    clearInterval(timerId);
-                    submitQuiz(true);
-                }
-            }, 1000);
-        }
+    function selectMC(qid, optIdx, btn) {
+        answers[qid] = optIdx;
+        const parent = btn.parentElement;
+        parent.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+    }
 
-        function renderQuestions() {
-            const container = document.getElementById('questions-container');
-            let html = '';
-
-            questions.forEach((q, index) => {
-                let badge = '';
-                let content = '';
-
-                if (q.type === 'mc' || q.type === 'tf') {
-                    badge = q.type === 'mc' ? 'TRẮC NGHIỆM' : 'ĐÚNG / SAI';
-                    const opts = q.type === 'mc' ? q.options : ['Đúng', 'Sai'];
-                    let buttons = '';
-                    
-                    opts.forEach((opt, optIdx) => {
-                        buttons += `<div class="option-btn" onclick="selectOption(${index}, ${optIdx}, this)">
-                            <span style="font-weight:bold; margin-right:5px;">${String.fromCharCode(65+optIdx)}.</span> ${opt}
-                        </div>`;
-                    });
-
-                    content = `<div class="options-grid" id="q-${index}">${buttons}</div>`;
-                } else if (q.type === 'fill') {
-                    badge = 'ĐIỀN KHUYẾT';
-                    const parts = q.q.split('___');
-                    content = `
-                        <div class="fill-blank-area">
-                            ${parts[0]} <span class="fill-slot" id="fill-${index}" onclick="removeFill(${index})">...</span> ${parts[1]}
-                        </div>
-                        <div class="word-bank">
-                            ${q.bank.map(w => `<button class="word-btn" onclick="selectFill(${index}, '${w}')">${w}</button>`).join('')}
-                        </div>
-                    `;
-                } else {
-                    badge = 'TỰ LUẬN';
-                    content = `<textarea rows="3" placeholder="Nhập câu trả lời..." oninput="inputShort(${index}, this.value)"></textarea>`;
-                }
-
-                html += `
-                    <div class="card">
-                        <span class="question-badge">Câu ${index+1} - ${badge}</span>
-                        <div class="question-text">${q.q.replace('___', '...')}</div>
-                        ${content}
-                    </div>
-                `;
-            });
-
-            container.innerHTML = html;
-        }
-
-        // --- INTERACTIONS ---
-
-        function selectOption(qIdx, optIdx, btn) {
-            // Save answer
-            answers[questions[qIdx].id] = optIdx;
-            
-            // UI Update
-            const container = document.getElementById(`q-${qIdx}`);
-            const buttons = container.getElementsByClassName('option-btn');
-            for(let b of buttons) b.classList.remove('selected');
-            btn.classList.add('selected');
-        }
-
-        function selectFill(qIdx, word) {
-            answers[questions[qIdx].id] = word;
-            document.getElementById(`fill-${qIdx}`).innerText = word;
-            document.getElementById(`fill-${qIdx}`).style.color = '#16a34a';
-        }
+    function selectTF(qid, itemIdx, val, btn) {
+        if (!answers[qid]) answers[qid] = {};
+        answers[qid][itemIdx] = val;
         
-        function removeFill(qIdx) {
-            delete answers[questions[qIdx].id];
-            document.getElementById(`fill-${qIdx}`).innerText = '...';
+        const row = btn.parentElement.parentElement;
+        row.querySelectorAll('.tf-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+    }
+
+    function fillSlot(qid, word, btn) {
+        // Reset old selection visually
+        const bank = btn.parentElement;
+        bank.querySelectorAll('.word-item').forEach(b => b.classList.remove('used'));
+        
+        answers[qid] = word;
+        document.getElementById(`slot-${qid}`).innerText = word;
+        document.getElementById(`slot-${qid}`).style.color = '#2563eb';
+        btn.classList.add('used');
+    }
+
+    function clearSlot(qid) {
+        delete answers[qid];
+        document.getElementById(`slot-${qid}`).innerText = '...';
+        document.getElementById(`slot-${qid}`).style.color = 'inherit';
+        // Reset bank styles (simplified, re-renders logic needed for perfect UI but okay for now)
+        const bank = document.getElementById(`slot-${qid}`).parentElement.nextElementSibling;
+        bank.querySelectorAll('.word-item').forEach(b => b.classList.remove('used'));
+    }
+
+    function saveShort(qid, val) {
+        answers[qid] = val;
+    }
+
+    // --- NỘP BÀI & CHẤM ĐIỂM ---
+
+    function confirmSubmit() {
+        if (confirm("Em chắc chắn muốn nộp bài?")) submitQuiz();
+    }
+
+    function submitQuiz() {
+        clearInterval(timerId);
+        document.getElementById('quiz-screen').classList.remove('active');
+        document.getElementById('result-screen').classList.add('active');
+
+        let score = 0;
+        let detailText = ""; // Để gửi Google Sheet
+
+        questions.forEach((q, idx) => {
+            detailText += `Câu ${idx+1}: `;
+            
+            // Chấm MC
+            if (q.type === 'mc') {
+                const isCorrect = answers[q.id] === q.a;
+                if (isCorrect) score += 0.25;
+                detailText += isCorrect ? "Đúng" : `Sai (Chọn: ${q.opts[answers[q.id]] || 'Chưa làm'})`;
+            }
+            // Chấm TF Group
+            else if (q.type === 'tf-group') {
+                let correctCount = 0;
+                let subRes = [];
+                q.items.forEach((item, i) => {
+                    const userAns = answers[q.id] ? answers[q.id][i] : null;
+                    if (userAns === item.a) correctCount++;
+                    subRes.push(userAns === item.a ? "Đ" : "S");
+                });
+                score += correctCount * 0.1;
+                detailText += `Đúng ${correctCount}/4 ý (${subRes.join(',')})`;
+            }
+            // Chấm Fill
+            else if (q.type === 'fill') {
+                const isCorrect = answers[q.id] === q.a[0];
+                if (isCorrect) score += 0.4;
+                detailText += isCorrect ? "Đúng" : `Sai (Điền: ${answers[q.id] || '...'})`;
+            }
+            // Tự luận
+            else {
+                detailText += `TL: ${answers[q.id] || 'Trống'}`;
+            }
+            detailText += " | ";
+        });
+
+        const finalScore = score.toFixed(2);
+        document.getElementById('final-score').innerText = finalScore;
+        
+        // Lưu dữ liệu để gửi
+        window.examData = {
+            name: document.getElementById('s-name').value,
+            class: document.getElementById('s-class').value,
+            score: finalScore,
+            detail: detailText
+        };
+    }
+
+    // --- GỬI GOOGLE SHEET ---
+    
+    function sendToGoogleSheet() {
+        // !!! QUAN TRỌNG: DÁN URL CỦA BẠN VÀO DÒNG DƯỚI ĐÂY !!!
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx5zUgAsa7Q_f9QIEjYGZx0PTydTk7Pz3A-_XKNmRKp3Klm9LrlEHWfT6gePHWPRnvX/exec"; 
+        
+        if (SCRIPT_URL.includes("PASTE_YOUR")) {
+            alert("Lỗi: Giáo viên chưa cấu hình đường dẫn Google Script trong code!");
+            return;
         }
 
-        function inputShort(qIdx, val) {
-            answers[questions[qIdx].id] = val;
-        }
+        document.getElementById('loading-overlay').style.display = 'block';
+        
+        // Gửi bằng fetch
+        fetch(SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors', // Quan trọng để tránh lỗi chặn trình duyệt
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(window.examData)
+        })
+        .then(() => {
+            document.getElementById('loading-overlay').style.display = 'none';
+            document.getElementById('submit-status').style.display = 'block';
+            document.getElementById('btn-send-sheet').style.display = 'none';
+            alert("Đã gửi kết quả thành công!");
+        })
+        .catch(err => {
+            document.getElementById('loading-overlay').style.display = 'none';
+            alert("Có lỗi xảy ra: " + err);
+        });
+    }
+</script>
 
-        // --- SUBMIT & REVIEW ---
-
-        function submitQuiz(force = false) {
-            if (!force && !confirm("Em chắc chắn muốn nộp bài?")) return;
-            
-            clearInterval(timerId);
-            window.scrollTo(0,0);
-            
-            // Calculate Score
-            let correctCount = 0;
-            let totalObjQuestions = 0;
-            
-            questions.forEach(q => {
-                if(q.type !== 'short') {
-                    totalObjQuestions++;
-                    if(answers[q.id] === q.a) correctCount++;
-                }
-            });
-
-            const score = (correctCount * 0.2).toFixed(2); // 0.2 points per question (approx 9 pts total)
-
-            // Show Result
-            document.getElementById('quiz-screen').classList.remove('active');
-            document.getElementById('result-screen').classList.add('active');
-            
-            document.getElementById('final-score').innerText = score;
-            document.getElementById('result-info').innerText = document.getElementById('display-name').innerText;
-            
-            renderReview();
-        }
-
-        function renderReview() {
-            const container = document.getElementById('review-container');
-            let html = '<h3 style="margin-top:30px; border-bottom: 2px solid #eee; padding-bottom:10px;">XEM LẠI BÀI LÀM</h3>';
-
-            questions.forEach((q, index) => {
-                const userAns = answers[q.id];
-                let content = '';
-                let status = '';
-
-                // MC & TF REVIEW
-                if (q.type === 'mc' || q.type === 'tf') {
-                    const opts = q.type === 'mc' ? q.options : ['Đúng', 'Sai'];
-                    let buttons = '';
-                    
-                    if (userAns === q.a) status = '<span style="color:green">✓ Đúng</span>';
-                    else status = '<span style="color:red">✗ Sai</span>';
-
-                    opts.forEach((opt, optIdx) => {
-                        let cls = 'option-btn';
-                        if (optIdx === q.a) cls += ' correct'; // Correct Answer
-                        else if (optIdx === userAns) cls += ' wrong'; // User Wrong Answer
-                        
-                        buttons += `<div class="${cls}">
-                             ${String.fromCharCode(65+optIdx)}. ${opt}
-                        </div>`;
-                    });
-                    content = `<div class="options-grid">${buttons}</div>`;
-                } 
-                // FILL REVIEW
-                else if (q.type === 'fill') {
-                    const isCorrect = userAns === q.a;
-                    status = isCorrect ? '<span style="color:green">✓ Đúng</span>' : '<span style="color:red">✗ Sai</span>';
-                    
-                    content = `
-                        <div class="fill-blank-area">
-                            ${q.q.replace('___', `<b style="color:${isCorrect ? 'green' : 'red'}">${userAns || '...'}</b>`)}
-                        </div>
-                        ${!isCorrect ? `<div class="explanation-box">Đáp án đúng: <b>${q.a}</b></div>` : ''}
-                    `;
-                } 
-                // SHORT REVIEW
-                else {
-                    status = '<span style="color:orange">⚠ Tự chấm</span>';
-                    content = `
-                        <div style="background:#f9fafb; padding:10px; border-radius:5px; margin-bottom:10px;">
-                            <b>Bài làm của em:</b> ${userAns || 'Chưa trả lời'}
-                        </div>
-                        <div class="explanation-box">
-                            <b>Đáp án gợi ý:</b> ${q.a}
-                        </div>
-                    `;
-                }
-
-                html += `
-                    <div class="card">
-                        <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
-                            <span class="question-badge">Câu ${index+1}</span>
-                            <strong>${status}</strong>
-                        </div>
-                        <div class="question-text">${q.q.replace('___', '...')}</div>
-                        ${content}
-                    </div>
-                `;
-            });
-
-            container.innerHTML = html;
-        }
-    </script>
 </body>
 </html>
