@@ -3,7 +3,8 @@ const subjects = {
     toan6: new Subject("Toán 6", "toan6"),
     toan11: new Subject("Toán 11", "toan11"),
     khtn6: new Subject("KHTN 6", "khtn6"),
-    van10: new Subject("Ngữ Văn 10", "van10")
+    van10: new Subject("Ngữ Văn 10", "van10"),
+    cn7: new Subject("Công Nghệ 7", "cn7")
 };
 
 // --- THÊM ĐỀ THI VÀO ĐÂY ---
