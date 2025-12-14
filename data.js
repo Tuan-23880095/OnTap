@@ -1,58 +1,39 @@
-// Khởi tạo các môn học
-const subjects = {
-    toan6: new Subject("Toán 6", "toan6"),
-    toan11: new Subject("Toán 11", "toan11"),
-    khtn6: new Subject("KHTN 6", "khtn6"),
-    van10: new Subject("Ngữ Văn 10", "van10"),
-    cn7: new Subject("Công Nghệ 7", "cn7")
-};
+/**
+ * DATA.JS - Dữ liệu đề thi
+ * Sử dụng các Class đã định nghĩa trong app.js
+ */
 
-// --- THÊM ĐỀ THI VÀO ĐÂY ---
+// --- KHU 1: TOÁN ---
+const mathDomain = new Domain("Toán Học", "📐");
 
-// Toán 11
-subjects.toan11.addExam(new Exam("t11_21", "Đề kiểm tra số 21", "90 phút", "Toan11", "de21.html"));
-subjects.toan11.addExam(new Exam("t11_22", "Đề kiểm tra số 22", "90 phút", "Toan11", "de22.html"));
+const toan6 = new Subject("Toán 6", "Toan6");
+toan6.addExam(new Exam("T6_CK1_01", "Đề Cuối Kỳ 1 - Số 01", "60 phút", "T6_CK1_2526_01.html"));
+// Thêm đề khác: toan6.addExam(new Exam("ID", "Tên", "TG", "file.html"));
 
-// Toán 6
-subjects.toan6.addExam(new Exam("t6_01", "Đề giữa kỳ 1", "60 phút", "Toan6", "de1.html"));
+const toan11 = new Subject("Toán 11", "Toan11");
+toan11.addExam(new Exam("T11_21", "Đề kiểm tra số 21", "90 phút", "de21.html"));
 
-// KHTN 6
-subjects.khtn6.addExam(new Exam("kh6_01", "Bài kiểm tra chất lượng", "45 phút", "KHTN6", "de1.html"));
+mathDomain.addSubject(toan6).addSubject(toan11);
 
-// Hàm render trang chủ (được gọi ở index.html)
-function renderHomePage() {
-    const container = document.getElementById('main-content');
-    
-    // Duyệt qua từng môn
-    for (const key in subjects) {
-        const sub = subjects[key];
-        if (sub.exams.length === 0) continue; // Bỏ qua môn chưa có đề
+// --- KHU 2: KHOA HỌC TỰ NHIÊN ---
+const scienceDomain = new Domain("Khoa Học Tự Nhiên", "🧪");
+const khtn6 = new Subject("KHTN 6", "KHTN6");
+// khtn6.addExam(...);
+scienceDomain.addSubject(khtn6);
 
-        const section = document.createElement('div');
-        section.className = 'subject-section';
-        
-        const title = document.createElement('h2');
-        title.className = 'subject-title';
-        title.innerText = sub.name;
-        section.appendChild(title);
+// --- KHU 3: KHOA HỌC XÃ HỘI ---
+const socialDomain = new Domain("Khoa Học Xã Hội", "📚");
+const van7 = new Subject("Ngữ Văn 7", "Van7");
+socialDomain.addSubject(van7);
 
-        const grid = document.createElement('div');
-        grid.className = 'exam-grid';
+// --- KHU 4: MÔN KHÁC (Sửa folder thành MonPhu) ---
+const otherDomain = new Domain("MÔN KHÁC", "💡");
 
-        // Duyệt qua từng đề trong môn
-        sub.exams.forEach(exam => {
-            const card = document.createElement('a');
-            card.href = exam.path;
-            card.className = 'exam-card';
-            card.innerHTML = `
-                <h3>${exam.title}</h3>
-                <div class="exam-info">⏱️ ${exam.time}</div>
-                <div class="exam-info">🆔 ${exam.id}</div>
-            `;
-            grid.appendChild(card);
-        });
+const cn7 = new Subject("Công Nghệ 7", "MonPhu"); // Folder là MonPhu khớp với ảnh
+cn7.addExam(new Exam("CN7_CK1_01", "Đề Cuối Kỳ 1 - Số 01", "60 phút", "CN7_CK1_2526_01.html"));
 
-        section.appendChild(grid);
-        container.appendChild(section);
-    }
-}
+otherDomain.addSubject(cn7);
+
+// --- TỔNG HỢP DỮ LIỆU ---
+// Biến này sẽ được index.html sử dụng
+const database = [mathDomain, scienceDomain, socialDomain, otherDomain];
