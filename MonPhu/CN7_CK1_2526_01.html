@@ -3,19 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đề Kiểm Tra Công Nghệ 7 - Cuối HK1</title>
+    <title>Đề Kiểm Tra Công Nghệ 7 - HCMUS Style</title>
     <style>
+        /* --- CẤU HÌNH GIAO DIỆN (THEO STYLE TRONG PDF) --- */
         :root {
-            --primary: #15803d; /* Green 700 */
-            --light-green: #dcfce7;
-            --bg: #f3f4f6;
+            --primary: #005a8d; /* Xanh đậm HCMUS */
+            --primary-dark: #00406b;
+            --accent: #f39c12; /* Màu cam nhấn */
+            --bg: #f8f9fa;     /* Nền sáng */
             --white: #ffffff;
-            --text: #1f2937;
-            --border: #e5e7eb;
+            --text: #333333;
+            --border: #dddddd;
             --blue: #2563eb;
             --red: #dc2626;
+            --success: #22c55e;
+            --light-blue: #e0f2fe;
         }
-        body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding-bottom: 80px; }
+        
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: var(--bg); 
+            color: var(--text); 
+            margin: 0; 
+            padding-bottom: 80px; 
+            line-height: 1.6;
+        }
+
         .container { max-width: 900px; margin: 0 auto; padding: 20px; }
         
         /* Screens */
@@ -24,96 +37,163 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         /* Card Style */
-        .card { background: var(--white); border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border: 1px solid var(--border); }
-        .card h3 { margin-top: 0; font-size: 1.1rem; color: #111827; }
-        .badge { display: inline-block; font-size: 0.75rem; font-weight: 700; color: var(--primary); background: var(--light-green); padding: 2px 8px; border-radius: 4px; margin-bottom: 8px; }
+        .card { 
+            background: var(--white); 
+            border-radius: 8px; 
+            padding: 25px; 
+            margin-bottom: 20px; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05); 
+            border: 1px solid var(--border); 
+        }
+        .card h3 { margin-top: 0; font-size: 1.15rem; color: var(--primary); font-weight: 600; }
+        
+        .badge { 
+            display: inline-block; 
+            font-size: 0.8rem; 
+            font-weight: 700; 
+            color: var(--white); 
+            background: var(--accent);
+            padding: 3px 10px; 
+            border-radius: 4px; 
+            margin-bottom: 10px; 
+        }
 
         /* Inputs & Buttons */
-        input[type="text"], textarea { width: 100%; padding: 12px; margin: 8px 0 20px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; }
-        button.btn { background-color: var(--primary); color: white; padding: 12px 24px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; font-size: 1rem; transition: 0.2s; }
-        button.btn:hover { opacity: 0.9; }
-        button.btn:disabled { background-color: #9ca3af; cursor: not-allowed; }
+        input[type="text"], textarea { 
+            width: 100%; padding: 12px; margin: 8px 0 20px; 
+            border: 2px solid var(--border); border-radius: 6px; 
+            box-sizing: border-box; transition: border-color 0.3s;
+        }
+        input[type="text"]:focus, textarea:focus { border-color: var(--primary); outline: none; }
+
+        button.btn { 
+            background-color: var(--primary); color: white; padding: 12px 24px; 
+            border: none; border-radius: 6px; font-weight: 700; cursor: pointer; 
+            width: 100%; font-size: 1rem; transition: all 0.2s; text-transform: uppercase;
+        }
+        button.btn:hover { background-color: var(--primary-dark); transform: translateY(-1px); }
+        button.btn:disabled { background-color: #9ca3af; cursor: not-allowed; transform: none; }
 
         /* Question Styles */
-        .option-btn { display: block; width: 100%; text-align: left; padding: 12px; border: 2px solid var(--border); border-radius: 8px; background: white; margin-bottom: 8px; cursor: pointer; transition: 0.2s; }
-        .option-btn:hover { background: #f9fafb; border-color: var(--primary); }
-        .option-btn.selected { background: #eff6ff; border-color: var(--blue); color: var(--blue); font-weight: 600; }
-        .option-btn.correct { background: #dcfce7; border-color: var(--primary); }
-        .option-btn.wrong { background: #fee2e2; border-color: var(--red); }
+        .option-btn { 
+            display: block; width: 100%; text-align: left; padding: 14px; 
+            border: 2px solid var(--border); border-radius: 8px; background: white; 
+            margin-bottom: 10px; cursor: pointer; transition: 0.2s; font-size: 0.95rem;
+        }
+        .option-btn:hover { background: #f1f5f9; border-color: var(--primary); }
+        .option-btn.selected { background: var(--light-blue); border-color: var(--primary); color: var(--primary); font-weight: 600; }
+        .option-btn.correct { background: #dcfce7; border-color: var(--success); color: #166534; }
+        .option-btn.wrong { background: #fee2e2; border-color: var(--red); color: #991b1b; }
 
         /* True/False Group */
-        .tf-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        .tf-table th, .tf-table td { border: 1px solid var(--border); padding: 10px; text-align: left; }
-        .tf-table th { background: #f8fafc; text-align: center; }
-        .tf-btn { width: 60px; padding: 5px; border-radius: 4px; border: 1px solid #ccc; cursor: pointer; }
-        .tf-btn.selected { background: var(--blue); color: white; border-color: var(--blue); }
+        .tf-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        .tf-table th, .tf-table td { border: 1px solid var(--border); padding: 12px; text-align: left; }
+        .tf-table th { background: #f8fafc; text-align: center; color: #555; }
+        .tf-btn { width: 70px; padding: 6px; border-radius: 4px; border: 1px solid #ccc; cursor: pointer; font-weight: 600; }
+        .tf-btn.selected { background: var(--primary); color: white; border-color: var(--primary); }
 
-        /* Drag & Drop (Click Simulation) */
-        .fill-area { line-height: 2; font-size: 1.1rem; background: #f0f9ff; padding: 15px; border-radius: 8px; border: 1px dashed var(--blue); margin-bottom: 10px; }
-        .drop-slot { display: inline-block; min-width: 80px; height: 30px; border-bottom: 2px solid #94a3b8; text-align: center; color: var(--blue); font-weight: bold; margin: 0 5px; cursor: pointer; background: white; vertical-align: bottom; }
+        /* Drag & Drop */
+        .fill-area { 
+            line-height: 2.2; font-size: 1.1rem; background: var(--light-blue); 
+            padding: 20px; border-radius: 8px; border: 2px dashed var(--primary); margin-bottom: 15px; 
+        }
+        .drop-slot { 
+            display: inline-block; min-width: 100px; height: 30px; 
+            border-bottom: 2px solid var(--primary); text-align: center; color: var(--primary); 
+            font-weight: bold; margin: 0 5px; cursor: pointer; background: white; 
+            vertical-align: bottom; border-radius: 4px;
+        }
         .word-bank { display: flex; flex-wrap: wrap; gap: 10px; }
-        .word-item { padding: 6px 12px; background: #e2e8f0; border-radius: 20px; cursor: pointer; font-size: 0.9rem; user-select: none; }
-        .word-item.used { opacity: 0.5; pointer-events: none; text-decoration: line-through; }
+        .word-item { 
+            padding: 8px 16px; background: white; border: 1px solid var(--border);
+            border-radius: 20px; cursor: pointer; font-size: 0.9rem; user-select: none; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05); transition: transform 0.2s;
+        }
+        .word-item:hover { transform: translateY(-2px); border-color: var(--primary); }
+        .word-item.used { opacity: 0.5; pointer-events: none; background: #e5e7eb; transform: none; box-shadow: none; }
 
         /* Sticky Header */
-        .header { position: fixed; top: 0; left: 0; right: 0; background: white; padding: 10px 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); z-index: 100; display: flex; justify-content: space-between; align-items: center; }
-        .timer { font-weight: bold; color: var(--red); font-family: monospace; font-size: 1.2rem; }
+        .header { 
+            position: fixed; top: 0; left: 0; right: 0; background: white; 
+            padding: 10px 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); z-index: 100; 
+            display: flex; justify-content: space-between; align-items: center; 
+            border-bottom: 3px solid var(--primary);
+        }
+        .header-logo { font-weight: 800; font-size: 1.2rem; color: var(--primary); text-transform: uppercase; }
+        .timer { font-weight: 800; color: white; background: var(--accent); padding: 5px 15px; border-radius: 20px; font-family: monospace; font-size: 1.1rem; }
 
         /* Modal */
-        #loading-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 200; text-align: center; padding-top: 20%; color: white; font-size: 1.5rem; }
+        #loading-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 200; text-align: center; padding-top: 20%; color: white; font-size: 1.5rem; font-weight: bold; }
     </style>
 </head>
 <body>
 
-<!-- LOADING -->
-<div id="loading-overlay">Đang gửi dữ liệu... vui lòng chờ...</div>
+<!-- LOADING OVERLAY -->
+<div id="loading-overlay">Đang gửi dữ liệu lên hệ thống...</div>
 
 <!-- START SCREEN -->
-<div id="start-screen" class="screen active container" style="text-align: center; margin-top: 50px;">
-    <div class="card">
-        <h1 style="color: var(--primary);">ĐỀ THI CÔNG NGHỆ 7</h1>
-        <p>HKI - Thời gian: 45 phút</p>
-        <div style="text-align: left; margin-top: 20px;">
-            <label>Họ và tên:</label>
-            <input type="text" id="s-name" placeholder="Nhập họ tên...">
-            <label>Lớp:</label>
-            <input type="text" id="s-class" placeholder="Nhập lớp...">
+<div id="start-screen" class="screen active container" style="text-align: center; margin-top: 80px;">
+    <div class="card" style="border-top: 5px solid var(--primary);">
+        <h1 style="color: var(--primary); margin-bottom: 5px;">HỆ THỐNG KIỂM TRA TRỰC TUYẾN</h1>
+        <h2 style="color: #666; font-weight: 500; margin-top: 0;">Môn: Công Nghệ 7</h2>
+        <p class="badge" style="font-size: 1rem; padding: 5px 15px;">HKI - Thời gian: 45 phút</p>
+        
+        <div style="text-align: left; margin-top: 30px;">
+            <label style="font-weight: 600; color: var(--text);">Họ và tên học sinh:</label>
+            <input type="text" id="s-name" placeholder="Nhập họ và tên đầy đủ...">
+            
+            <label style="font-weight: 600; color: var(--text);">Lớp:</label>
+            <input type="text" id="s-class" placeholder="VD: 7A1...">
         </div>
         <button class="btn" onclick="startQuiz()">BẮT ĐẦU LÀM BÀI</button>
     </div>
+    <p style="color: #999; font-size: 0.9rem;">Hệ thống bài tập theo phong cách HCMUS</p>
 </div>
 
 <!-- QUIZ SCREEN -->
 <div id="quiz-screen" class="screen">
     <div class="header">
-        <div id="info-display" style="font-weight:bold; font-size: 0.9rem;">Học sinh</div>
+        <div class="header-logo">Công Nghệ 7</div>
+        <div id="info-display" style="font-weight:600; font-size: 0.9rem; color: #555;">Học sinh</div>
         <div class="timer" id="timer">45:00</div>
-        <button onclick="confirmSubmit()" style="background:var(--blue); color:white; border:none; padding:8px 15px; border-radius:6px; cursor:pointer;">Nộp bài</button>
+        <button onclick="confirmSubmit()" style="background:var(--primary); color:white; border:none; padding:8px 20px; border-radius:20px; cursor:pointer; font-weight:bold; font-size: 0.9rem;">NỘP BÀI</button>
     </div>
-    <div class="container" style="margin-top: 60px;" id="questions-list"></div>
+    <div class="container" style="margin-top: 80px;" id="questions-list"></div>
 </div>
 
 <!-- RESULT SCREEN -->
-<div id="result-screen" class="screen container" style="text-align: center;">
-    <div class="card">
-        <h2 style="color: var(--primary);">KẾT QUẢ</h2>
-        <h1 id="final-score" style="font-size: 3rem; margin: 10px 0; color: var(--blue);"></h1>
-        <p>Điểm phần trắc nghiệm & điền khuyết (Thang điểm 10)</p>
-        <p style="font-size: 0.9rem; color: gray;">* Phần tự luận chưa tính trong điểm số này.</p>
-        
-        <div id="submit-status" style="margin-top: 20px; padding: 10px; background: #f0fdf4; color: #15803d; border-radius: 8px; display: none;">
-            ✅ Đã gửi kết quả thành công cho giáo viên!
+<div id="result-screen" class="screen container" style="text-align: center; margin-top: 50px;">
+    <div class="card" style="border-top: 5px solid var(--accent);">
+        <h2 style="color: var(--text);">KẾT QUẢ BÀI LÀM</h2>
+        <div style="width: 120px; height: 120px; background: var(--light-blue); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto; border: 4px solid var(--primary);">
+            <h1 id="final-score" style="font-size: 2.5rem; margin: 0; color: var(--primary);"></h1>
         </div>
-        <button id="btn-send-sheet" class="btn" style="background: #0f766e; margin-top: 10px;" onclick="sendToGoogleSheet()">Gửi kết quả cho Giáo viên</button>
-        <button class="btn" style="background: #4b5563; margin-top: 10px;" onclick="location.reload()">Làm lại</button>
+        
+        <p style="margin-top: 15px; font-weight: 500;">Điểm trắc nghiệm & điền khuyết (Thang 10)</p>
+        <p style="font-size: 0.9rem; color: gray; font-style: italic;">(Phần tự luận sẽ được giáo viên chấm sau)</p>
+        
+        <!-- Thông báo gửi thành công -->
+        <div id="submit-status" style="margin-top: 20px; padding: 15px; background: #dcfce7; color: #166534; border-radius: 8px; border: 1px solid #86efac; display: none; font-weight: 600;">
+            ✅ Đã lưu kết quả vào hệ thống thành công!
+        </div>
+        
+        <div style="display: flex; gap: 10px; margin-top: 20px;">
+            <!-- Nút gửi gọi hàm từ app.js -->
+            <button id="btn-send-sheet" class="btn" style="background: var(--primary);" onclick="sendToGoogleSheet()">Gửi kết quả cho Giáo viên</button>
+            <button class="btn" style="background: #64748b;" onclick="location.reload()">Làm lại bài</button>
+        </div>
     </div>
     <div id="review-list" style="text-align: left;"></div>
 </div>
 
+<!-- !!! QUAN TRỌNG: LIÊN KẾT TỚI APP.JS !!! -->
+<!-- Nếu file này nằm trong thư mục con, dùng "../app.js". Nếu ở gốc dùng "app.js" -->
+<script src="../app.js"></script>
+
 <script>
     // --- CẤU TRÚC ĐỀ THI ---
     const questions = [
-        // 12 CÂU TRẮC NGHIỆM (0.25đ/câu = 3.0đ)
+        // 12 CÂU TRẮC NGHIỆM
         { id: 1, type: 'mc', q: "Giâm cành là phương pháp nhân giống:", opts: ["Hữu tính", "Vô tính", "Nuôi cấy mô", "Lai tạo"], a: 1 },
         { id: 2, type: 'mc', q: "Cây nào dễ giâm cành?", opts: ["Lúa", "Ngô", "Mía", "Xoài"], a: 2 },
         { id: 3, type: 'mc', q: "Chiều dài tiêu chuẩn cành giâm?", opts: ["5-10cm", "15-20cm", "30-40cm", "50cm"], a: 1 },
@@ -127,7 +207,7 @@
         { id: 11, type: 'mc', q: "Vườn quốc gia Cúc Phương là:", opts: ["Rừng sản xuất", "Rừng đặc dụng", "Rừng phòng hộ", "Rừng ngập mặn"], a: 1 },
         { id: 12, type: 'mc', q: "Khi phun thuốc trừ sâu cần:", opts: ["Phun ngược gió", "Không đeo khẩu trang", "Phun theo chiều gió", "Phun buổi trưa"], a: 2 },
 
-        // 4 CÂU CHÙM ĐÚNG SAI (Mỗi ý 0.1đ -> 1 câu = 0.4đ -> 4 câu = 1.6đ)
+        // 4 CÂU ĐÚNG SAI
         { 
             id: 13, type: 'tf-group', q: "Nhận định về phương pháp giâm cành:", 
             items: [
@@ -165,7 +245,7 @@
             ]
         },
 
-        // 5 CÂU ĐIỀN KHUYẾT (0.4đ/câu = 2.0đ)
+        // 5 CÂU ĐIỀN KHUYẾT
         { 
             id: 17, type: 'fill', q: "Quy trình giâm cành: Tạo giá thể → Tạo lỗ → ...1... → Tỉa bớt lá → Giâm vào giá thể.", 
             bank: ["Cắt cành", "Tưới nước", "Bón phân", "Phơi nắng"], a: ["Cắt cành"] 
@@ -187,7 +267,7 @@
             bank: ["sản xuất", "phòng hộ", "đặc dụng", "nguyên sinh"], a: ["phòng hộ"] 
         },
 
-        // 5 CÂU TỰ LUẬN (Giáo viên chấm sau)
+        // 5 CÂU TỰ LUẬN
         { id: 22, type: 'short', q: "Tại sao phải tỉa bớt lá khi giâm cành?" },
         { id: 23, type: 'short', q: "Kể tên 3 dụng cụ trồng rau?" },
         { id: 24, type: 'short', q: "Thế nào là canh tác hữu cơ?" },
@@ -195,12 +275,11 @@
         { id: 26, type: 'short', q: "Em làm gì để bảo vệ rừng?" }
     ];
 
-    let answers = {}; // Lưu đáp án
+    let answers = {};
     let timeLeft = 45 * 60;
     let timerId;
 
     // --- LOGIC ---
-
     function startQuiz() {
         const name = document.getElementById('s-name').value;
         const cls = document.getElementById('s-class').value;
@@ -227,13 +306,11 @@
                 <span class="badge">Câu ${idx+1}</span>
                 <h3>${q.q}</h3>`;
 
-            // Render Trắc nghiệm
             if (q.type === 'mc') {
                 q.opts.forEach((opt, oIdx) => {
                     html += `<button class="option-btn" onclick="selectMC(${q.id}, ${oIdx}, this)">${String.fromCharCode(65+oIdx)}. ${opt}</button>`;
                 });
             }
-            // Render Đúng Sai (Grid)
             else if (q.type === 'tf-group') {
                 html += `<table class="tf-table">
                     <tr><th>Nội dung</th><th>Đúng</th><th>Sai</th></tr>`;
@@ -246,7 +323,6 @@
                 });
                 html += `</table>`;
             }
-            // Render Điền khuyết (Drag sim)
             else if (q.type === 'fill') {
                 const parts = q.q.split('...1...');
                 html += `<div class="fill-area">${parts[0]} <span class="drop-slot" onclick="clearSlot(${q.id})" id="slot-${q.id}">...</span> ${parts[1]}</div>`;
@@ -256,7 +332,6 @@
                 });
                 html += `</div>`;
             }
-            // Render Tự luận
             else if (q.type === 'short') {
                 html += `<textarea rows="3" placeholder="Nhập câu trả lời..." onchange="saveShort(${q.id}, this.value)"></textarea>`;
             }
@@ -266,8 +341,7 @@
         });
     }
 
-    // --- XỬ LÝ CHỌN ĐÁP ÁN ---
-
+    // --- INTERACTION ---
     function selectMC(qid, optIdx, btn) {
         answers[qid] = optIdx;
         const parent = btn.parentElement;
@@ -278,20 +352,17 @@
     function selectTF(qid, itemIdx, val, btn) {
         if (!answers[qid]) answers[qid] = {};
         answers[qid][itemIdx] = val;
-        
         const row = btn.parentElement.parentElement;
         row.querySelectorAll('.tf-btn').forEach(b => b.classList.remove('selected'));
         btn.classList.add('selected');
     }
 
     function fillSlot(qid, word, btn) {
-        // Reset old selection visually
         const bank = btn.parentElement;
         bank.querySelectorAll('.word-item').forEach(b => b.classList.remove('used'));
-        
         answers[qid] = word;
         document.getElementById(`slot-${qid}`).innerText = word;
-        document.getElementById(`slot-${qid}`).style.color = '#2563eb';
+        document.getElementById(`slot-${qid}`).style.color = '#005a8d';
         btn.classList.add('used');
     }
 
@@ -299,7 +370,6 @@
         delete answers[qid];
         document.getElementById(`slot-${qid}`).innerText = '...';
         document.getElementById(`slot-${qid}`).style.color = 'inherit';
-        // Reset bank styles (simplified, re-renders logic needed for perfect UI but okay for now)
         const bank = document.getElementById(`slot-${qid}`).parentElement.nextElementSibling;
         bank.querySelectorAll('.word-item').forEach(b => b.classList.remove('used'));
     }
@@ -307,8 +377,6 @@
     function saveShort(qid, val) {
         answers[qid] = val;
     }
-
-    // --- NỘP BÀI & CHẤM ĐIỂM ---
 
     function confirmSubmit() {
         if (confirm("Em chắc chắn muốn nộp bài?")) submitQuiz();
@@ -320,18 +388,15 @@
         document.getElementById('result-screen').classList.add('active');
 
         let score = 0;
-        let detailText = ""; // Để gửi Google Sheet
+        let detailText = ""; 
 
         questions.forEach((q, idx) => {
             detailText += `Câu ${idx+1}: `;
-            
-            // Chấm MC
             if (q.type === 'mc') {
                 const isCorrect = answers[q.id] === q.a;
                 if (isCorrect) score += 0.25;
                 detailText += isCorrect ? "Đúng" : `Sai (Chọn: ${q.opts[answers[q.id]] || 'Chưa làm'})`;
             }
-            // Chấm TF Group
             else if (q.type === 'tf-group') {
                 let correctCount = 0;
                 let subRes = [];
@@ -343,13 +408,11 @@
                 score += correctCount * 0.1;
                 detailText += `Đúng ${correctCount}/4 ý (${subRes.join(',')})`;
             }
-            // Chấm Fill
             else if (q.type === 'fill') {
                 const isCorrect = answers[q.id] === q.a[0];
                 if (isCorrect) score += 0.4;
                 detailText += isCorrect ? "Đúng" : `Sai (Điền: ${answers[q.id] || '...'})`;
             }
-            // Tự luận
             else {
                 detailText += `TL: ${answers[q.id] || 'Trống'}`;
             }
@@ -359,45 +422,14 @@
         const finalScore = score.toFixed(2);
         document.getElementById('final-score').innerText = finalScore;
         
-        // Lưu dữ liệu để gửi
+        // CHUẨN BỊ DỮ LIỆU ĐỂ GỬI QUA APP.JS
         window.examData = {
+            timestamp: new Date().toLocaleString('vi-VN'),
             name: document.getElementById('s-name').value,
             class: document.getElementById('s-class').value,
             score: finalScore,
             detail: detailText
         };
-    }
-
-    // --- GỬI GOOGLE SHEET ---
-    
-    function sendToGoogleSheet() {
-        // !!! QUAN TRỌNG: DÁN URL CỦA BẠN VÀO DÒNG DƯỚI ĐÂY !!!
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx5zUgAsa7Q_f9QIEjYGZx0PTydTk7Pz3A-_XKNmRKp3Klm9LrlEHWfT6gePHWPRnvX/exec"; 
-        
-        if (SCRIPT_URL.includes("PASTE_YOUR")) {
-            alert("Lỗi: Giáo viên chưa cấu hình đường dẫn Google Script trong code!");
-            return;
-        }
-
-        document.getElementById('loading-overlay').style.display = 'block';
-        
-        // Gửi bằng fetch
-        fetch(SCRIPT_URL, {
-            method: 'POST',
-            mode: 'no-cors', // Quan trọng để tránh lỗi chặn trình duyệt
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(window.examData)
-        })
-        .then(() => {
-            document.getElementById('loading-overlay').style.display = 'none';
-            document.getElementById('submit-status').style.display = 'block';
-            document.getElementById('btn-send-sheet').style.display = 'none';
-            alert("Đã gửi kết quả thành công!");
-        })
-        .catch(err => {
-            document.getElementById('loading-overlay').style.display = 'none';
-            alert("Có lỗi xảy ra: " + err);
-        });
     }
 </script>
 
