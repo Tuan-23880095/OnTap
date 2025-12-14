@@ -1,0 +1,27 @@
+:root { --primary: #2c3e50; --accent: #3498db; --bg: #f4f6f9; }
+body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; padding: 0; color: #333; }
+.container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+
+/* Header */
+header { background: var(--primary); color: white; padding: 20px 0; text-align: center; margin-bottom: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+header h1 { margin: 0; }
+.breadcrumb { color: #bdc3c7; font-size: 0.9rem; margin-top: 5px; }
+.breadcrumb a { color: white; text-decoration: none; }
+
+/* Grid Layout cho Index */
+.subject-section { margin-bottom: 40px; }
+.subject-title { border-bottom: 2px solid var(--accent); color: var(--primary); padding-bottom: 10px; margin-bottom: 20px; }
+.exam-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
+.exam-card { background: white; border-radius: 8px; padding: 20px; border: 1px solid #ddd; transition: 0.3s; text-decoration: none; color: inherit; display: block; }
+.exam-card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-color: var(--accent); }
+.exam-card h3 { margin: 0 0 10px 0; color: var(--accent); font-size: 1.1rem; }
+.exam-info { font-size: 0.85rem; color: #7f8c8d; }
+
+/* Giao diện làm bài thi */
+.student-info { background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+.input-group { margin-bottom: 10px; }
+.input-group label { display: inline-block; width: 100px; font-weight: bold; }
+.input-group input { padding: 8px; width: 300px; border: 1px solid #ccc; border-radius: 4px; }
+.question-card { background: white; padding: 20px; margin-bottom: 15px; border-radius: 8px; border-left: 4px solid var(--accent); }
+.btn-submit { background: #27ae60; color: white; border: none; padding: 15px 30px; font-size: 1.2rem; border-radius: 5px; cursor: pointer; width: 100%; }
+.btn-submit:hover { background: #219150; }
