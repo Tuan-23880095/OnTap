@@ -83,4 +83,4 @@ class ExamSystem {
 
 // Khởi tạo hệ thống với URL Google Script của bạn
 // BẠN CẦN THAY URL NÀY
-const MyExamSystem = new ExamSystem("https://script.google.com/macros/s/AKfycbz_URL_CUA_BAN_O_DAY/exec");
+const MyExamSystem = new ExamSystem("https://script.google.com/macros/s/AKfycbx5zUgAsa7Q_f9QIEjYGZx0PTydTk7Pz3A-_XKNmRKp3Klm9LrlEHWfT6gePHWPRnvX/exec");
